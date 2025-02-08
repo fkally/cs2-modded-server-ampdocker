@@ -203,32 +203,32 @@ ln -s /steamcmd/linux64/steamclient.so /home/${user}/.steam/sdk64/
 if [ "${DISTRO_OS}" == "Ubuntu" ]; then
 	if [ "${DISTRO_VERSION}" == "22.04" ]; then
 		# https://forums.alliedmods.net/showthread.php?t=336183
-		rm //bin/libgcc_s.so.1
+		rm /bin/libgcc_s.so.1
 	fi
 fi
 
 # Delete addons folder as if we remove something later in git it won't get deleted
-rm -r //game/csgo/addons
+rm -r /game/csgo/addons
 
 echo "Downloading mod files..."
 wget --quiet https://github.com/kus/cs2-modded-server/archive/${BRANCH}.zip
 unzip -o -qq ${BRANCH}.zip
 # Delete custom_files_example as I use this for my server and as a demo for others and I want it to always reflect git
-rm -r //custom_files_example/
-cp -R cs2-modded-server-${BRANCH}/custom_files_example/ //custom_files_example/
+rm -r /custom_files_example/
+cp -R cs2-modded-server-${BRANCH}/custom_files_example/ /custom_files_example/
 # Merge mod files into server files
-cp -R cs2-modded-server-${BRANCH}/game/csgo/ //game/
+cp -R cs2-modded-server-${BRANCH}/game/csgo/ /game/
 # Merge custom files into server files
-if [ ! -d "//custom_files/" ]; then
+if [ ! -d "/custom_files/" ]; then
     # If the target directory doesn't exist, copy the source directory to the target location
-    cp -R cs2-modded-server-${BRANCH}/custom_files/ //custom_files/
+    cp -R cs2-modded-server-${BRANCH}/custom_files/ /custom_files/
 else
     # If the target directory exists, copy all the contents of the source directory to the target directory
-    cp -RT cs2-modded-server-${BRANCH}/custom_files/ //custom_files/
+    cp -RT cs2-modded-server-${BRANCH}/custom_files/ /custom_files/
 fi
 
 echo "Merging in custom files from ${CUSTOM_FILES}"
-cp -RT //${CUSTOM_FILES}/ //game/csgo/
+cp -RT /${CUSTOM_FILES}/ /game/csgo/
 
 chown -R ${user}:${user} /
 
